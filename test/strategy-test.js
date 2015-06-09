@@ -5,7 +5,7 @@ var TripItStrategy = require('passport-tripit/strategy');
 
 
 vows.describe('TripItStrategy').addBatch({
-  
+
   'strategy': {
     topic: function() {
       return new TripItStrategy({
@@ -14,12 +14,12 @@ vows.describe('TripItStrategy').addBatch({
       },
       function() {});
     },
-    
+
     'should be named tripit': function (strategy) {
       assert.equal(strategy.name, 'tripit');
     },
   },
-  
+
   'strategy when loading user profile': {
     topic: function() {
       var strategy = new TripItStrategy({
@@ -27,7 +27,7 @@ vows.describe('TripItStrategy').addBatch({
         consumerSecret: 'secret'
       },
       function() {});
-      
+
       // mock
       strategy._oauth.get = function(url, token, tokenSecret, callback) {
         var body = '{ \
@@ -63,25 +63,25 @@ vows.describe('TripItStrategy').addBatch({
                 "ical_url": "webcal:\/\/www.tripit.com\/feed\/ical\/private\/XXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\/tripit.ics" \
             } \
         }';
-        
+
         callback(null, body, undefined);
       }
-      
+
       return strategy;
     },
-    
+
     'when told to load user profile': {
       topic: function(strategy) {
         var self = this;
         function done(err, profile) {
           self.callback(err, profile);
         }
-        
+
         process.nextTick(function () {
           strategy.userProfile('token', 'token-secret', {}, done);
         });
       },
-      
+
       'should not error' : function(err, req) {
         assert.isNull(err);
       },
@@ -90,6 +90,9 @@ vows.describe('TripItStrategy').addBatch({
         assert.equal(profile.id, 'XXxxXxxXX-xXNx_XXNNNXx');
         assert.equal(profile.username, 'jaredhanson');
         assert.equal(profile.displayName, 'Jared Hanson');
+        assert.equal(profile.emails.length, 2);
+        assert.equal(profile.emails[0], 'jaredhanson@example.com');
+        assert.equal(profile.emails[1], 'jaredhanson@example.net');
       },
       'should set raw property' : function(err, profile) {
         assert.isString(profile._raw);
@@ -99,7 +102,7 @@ vows.describe('TripItStrategy').addBatch({
       },
     },
   },
-  
+
   'strategy when loading user profile and encountering an error': {
     topic: function() {
       var strategy = new TripItStrategy({
@@ -107,27 +110,27 @@ vows.describe('TripItStrategy').addBatch({
         consumerSecret: 'secret'
       },
       function() {});
-      
+
       // mock
       strategy._oauth.get = function(url, token, tokenSecret, callback) {
         callback(new Error('something went wrong'));
       }
-      
+
       return strategy;
     },
-    
+
     'when told to load user profile': {
       topic: function(strategy) {
         var self = this;
         function done(err, profile) {
           self.callback(err, profile);
         }
-        
+
         process.nextTick(function () {
           strategy.userProfile('token', 'token-secret', {}, done);
         });
       },
-      
+
       'should error' : function(err, req) {
         assert.isNotNull(err);
       },
