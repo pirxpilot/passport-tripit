@@ -2,7 +2,14 @@
   "name": "passport-tripit",
   "version": "0.1.2",
   "description": "TripIt authentication strategy for Passport.",
-  "keywords": ["passport", "tripit", "auth", "authn", "authentication", "identity"],
+  "keywords": [
+    "passport",
+    "tripit",
+    "auth",
+    "authn",
+    "authentication",
+    "identity"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/jaredhanson/passport-tripit.git"
@@ -15,14 +22,16 @@
     "email": "jaredhanson@gmail.com",
     "url": "http://www.jaredhanson.net/"
   },
-  "licenses": [ {
-    "type": "MIT",
-    "url": "http://www.opensource.org/licenses/MIT" 
-  } ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
   "main": "./lib/passport-tripit",
   "dependencies": {
-    "pkginfo": "0.2.x",
-    "passport-oauth": "~0.1.1"
+    "passport-oauth1": "1.x.x",
+    "pkginfo": "0.2.x"
   },
   "devDependencies": {
     "vows": "0.6.x"
@@ -30,5 +39,7 @@
   "scripts": {
     "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"
   },
-  "engines": { "node": ">= 0.4.0" }
+  "engines": {
+    "node": ">= 0.4.0"
+  }
 }
