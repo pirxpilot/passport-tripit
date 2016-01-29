@@ -1,14 +1,14 @@
 {
-  "name": "passport-tripit",
-  "version": "0.1.2",
+  "name": "pirxpilot-passport-tripit",
+  "version": "0.0.0",
   "description": "TripIt authentication strategy for Passport.",
   "keywords": ["passport", "tripit", "auth", "authn", "authentication", "identity"],
   "repository": {
     "type": "git",
-    "url": "git://github.com/jaredhanson/passport-tripit.git"
+    "url": "git://github.com/pirxpilot/passport-tripit.git"
   },
   "bugs": {
-    "url": "http://github.com/jaredhanson/passport-tripit/issues"
+    "url": "http://github.com/pirxpilot/passport-tripit/issues"
   },
   "author": {
     "name": "Jared Hanson",

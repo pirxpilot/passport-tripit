@@ -1,5 +1,8 @@
 # Passport-TripIt
 
+Fork of [passport-tripit](https://npmjs.org/package/passport-tripit) -
+includes patches not accepted (yet) into original.
+
 [Passport](https://github.com/jaredhanson/passport) strategy for authenticating
 with [TripIt](http://www.tripit.com/) using the OAuth 1.0 API.
 
@@ -11,7 +14,7 @@ unobtrusively integrated into any application or framework that supports
 
 ## Install
 
-    $ npm install passport-tripit
+    $ npm install pirxpilot-passport-tripit
 
 ## Usage
 
