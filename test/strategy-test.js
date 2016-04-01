@@ -91,8 +91,8 @@ vows.describe('TripItStrategy').addBatch({
         assert.equal(profile.username, 'jaredhanson');
         assert.equal(profile.displayName, 'Jared Hanson');
         assert.equal(profile.emails.length, 2);
-        assert.equal(profile.emails[0], 'jaredhanson@example.com');
-        assert.equal(profile.emails[1], 'jaredhanson@example.net');
+        assert.deepEqual(profile.emails[0], { value: 'jaredhanson@example.com' });
+        assert.deepEqual(profile.emails[1], { value: 'jaredhanson@example.net' });
       },
       'should set raw property' : function(err, profile) {
         assert.isString(profile._raw);
