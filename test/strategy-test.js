@@ -1,36 +1,26 @@
-var vows = require('vows');
-var assert = require('assert');
-var util = require('util');
-var TripItStrategy = require('passport-tripit/strategy');
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const TripItStrategy = require('../lib/passport-tripit/strategy.js');
 
+test('TripItStrategy', async (t) => {
+  await t.test('strategy should be named tripit', () => {
+    const strategy = new TripItStrategy({
+      consumerKey: 'ABC123',
+      consumerSecret: 'secret'
+    }, function() {});
 
-vows.describe('TripItStrategy').addBatch({
+    assert.equal(strategy.name, 'tripit');
+  });
 
-  'strategy': {
-    topic: function() {
-      return new TripItStrategy({
-        consumerKey: 'ABC123',
-        consumerSecret: 'secret'
-      },
-      function() {});
-    },
+  await t.test('strategy when loading user profile', async (t) => {
+    const strategy = new TripItStrategy({
+      consumerKey: 'ABC123',
+      consumerSecret: 'secret'
+    }, function() {});
 
-    'should be named tripit': function (strategy) {
-      assert.equal(strategy.name, 'tripit');
-    },
-  },
-
-  'strategy when loading user profile': {
-    topic: function() {
-      var strategy = new TripItStrategy({
-        consumerKey: 'ABC123',
-        consumerSecret: 'secret'
-      },
-      function() {});
-
-      // mock
-      strategy._oauth.get = function(url, token, tokenSecret, callback) {
-        var body = '{ \
+    // mock
+    strategy._oauth.get = function(url, token, tokenSecret, callback) {
+      const body = '{ \
             "timestamp": "1322517396", \
             "num_bytes": "1240", \
             "Profile": { \
@@ -64,83 +54,64 @@ vows.describe('TripItStrategy').addBatch({
             } \
         }';
 
-        callback(null, body, undefined);
-      }
+      callback(null, body, undefined);
+    };
 
-      return strategy;
-    },
-
-    'when told to load user profile': {
-      topic: function(strategy) {
-        var self = this;
+    await t.test('when told to load user profile', async () => {
+      return new Promise((resolve, reject) => {
         function done(err, profile) {
-          self.callback(err, profile);
+          try {
+            assert.equal(err, null);
+            assert.equal(profile.provider, 'tripit');
+            assert.equal(profile.id, 'XXxxXxxXX-xXNx_XXNNNXx');
+            assert.equal(profile.username, 'jaredhanson');
+            assert.equal(profile.displayName, 'Jared Hanson');
+            assert.equal(profile.emails.length, 2);
+            assert.deepEqual(profile.emails[0], { value: 'jaredhanson@example.com' });
+            assert.deepEqual(profile.emails[1], { value: 'jaredhanson@example.net' });
+            assert.equal(typeof profile._raw, 'string');
+            assert.equal(typeof profile._json, 'object');
+            resolve();
+          } catch (e) {
+            reject(e);
+          }
         }
 
-        process.nextTick(function () {
+        process.nextTick(() => {
           strategy.userProfile('token', 'token-secret', {}, done);
         });
-      },
+      });
+    });
+  });
 
-      'should not error' : function(err, req) {
-        assert.isNull(err);
-      },
-      'should load profile' : function(err, profile) {
-        assert.equal(profile.provider, 'tripit');
-        assert.equal(profile.id, 'XXxxXxxXX-xXNx_XXNNNXx');
-        assert.equal(profile.username, 'jaredhanson');
-        assert.equal(profile.displayName, 'Jared Hanson');
-        assert.equal(profile.emails.length, 2);
-        assert.deepEqual(profile.emails[0], { value: 'jaredhanson@example.com' });
-        assert.deepEqual(profile.emails[1], { value: 'jaredhanson@example.net' });
-      },
-      'should set raw property' : function(err, profile) {
-        assert.isString(profile._raw);
-      },
-      'should set json property' : function(err, profile) {
-        assert.isObject(profile._json);
-      },
-    },
-  },
+  await t.test('strategy when loading user profile and encountering an error', async (t) => {
+    const strategy = new TripItStrategy({
+      consumerKey: 'ABC123',
+      consumerSecret: 'secret'
+    }, function() {});
 
-  'strategy when loading user profile and encountering an error': {
-    topic: function() {
-      var strategy = new TripItStrategy({
-        consumerKey: 'ABC123',
-        consumerSecret: 'secret'
-      },
-      function() {});
+    // mock
+    strategy._oauth.get = function(url, token, tokenSecret, callback) {
+      callback(new Error('something went wrong'));
+    };
 
-      // mock
-      strategy._oauth.get = function(url, token, tokenSecret, callback) {
-        callback(new Error('something went wrong'));
-      }
-
-      return strategy;
-    },
-
-    'when told to load user profile': {
-      topic: function(strategy) {
-        var self = this;
+    await t.test('when told to load user profile', async () => {
+      return new Promise((resolve, reject) => {
         function done(err, profile) {
-          self.callback(err, profile);
+          try {
+            assert.notEqual(err, null);
+            assert.equal(err.constructor.name, 'InternalOAuthError');
+            assert.equal(profile, undefined);
+            resolve();
+          } catch (e) {
+            reject(e);
+          }
         }
 
-        process.nextTick(function () {
+        process.nextTick(() => {
           strategy.userProfile('token', 'token-secret', {}, done);
         });
-      },
-
-      'should error' : function(err, req) {
-        assert.isNotNull(err);
-      },
-      'should wrap error in InternalOAuthError' : function(err, req) {
-        assert.equal(err.constructor.name, 'InternalOAuthError');
-      },
-      'should not load profile' : function(err, profile) {
-        assert.isUndefined(profile);
-      },
-    },
-  },
-
-}).export(module);
+      });
+    });
+  });
+});

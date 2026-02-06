@@ -32,14 +32,12 @@
   "dependencies": {
     "passport-oauth1": "1.x.x"
   },
-  "devDependencies": {
-    "vows": "~0.8.1"
-  },
+  "devDependencies": {},
   "scripts": {
-    "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"
+    "test": "node --test test/*-test.js"
   },
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 18.0.0"
   },
   "license": "MIT"
 }
