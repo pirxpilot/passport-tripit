@@ -13,11 +13,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": true,
-    "includes": [
-      "**",
-      "!examples"
-    ]
+    "ignoreUnknown": true
   },
   "formatter": {
     "enabled": true,
