@@ -32,9 +32,11 @@
   "dependencies": {
     "passport-oauth1": "1.x.x"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.14"
+  },
   "scripts": {
-    "test": "node --test test/*-test.js"
+    "test": "make check"
   },
   "engines": {
     "node": ">= 18.0.0"
