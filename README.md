@@ -1,3 +1,7 @@
+[![NPM version][npm-image]][npm-url]
+[![Build Status][build-image]][build-url]
+[![Dependency Status][deps-image]][deps-url]
+
 # Passport-TripIt
 
 Fork of [passport-tripit](https://npmjs.org/package/passport-tripit) -
@@ -64,8 +68,6 @@ For a complete, working example, refer to the [login example](https://github.com
     $ npm install --dev
     $ make test
 
-[![Build Status](https://secure.travis-ci.org/jaredhanson/passport-tripit.png)](http://travis-ci.org/jaredhanson/passport-tripit)
-
 ## Credits
 
   - [Jared Hanson](http://github.com/jaredhanson)
@@ -75,3 +77,12 @@ For a complete, working example, refer to the [login example](https://github.com
 [The MIT License](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2011-2013 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
+
+[npm-image]: https://img.shields.io/npm/v/pirxpilot-passport-tripit
+[npm-url]: https://npmjs.org/package/pirxpilot-passport-tripit
+
+[build-url]: https://github.com/pirxpilot/passport-tripit/actions/workflows/check.yaml
+[build-image]: https://img.shields.io/github/actions/workflow/status/pirxpilot/passport-tripit/check.yaml?branch=release
+
+[deps-image]: https://img.shields.io/librariesio/release/npm/pirxpilot-passport-tripit
+[deps-url]: https://libraries.io/npm/pirxpilot-passport-tripit
