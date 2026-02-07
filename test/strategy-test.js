@@ -1,8 +1,8 @@
-const test = require('node:test');
-const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const path = require('node:path');
-const TripItStrategy = require('../lib/passport-tripit/strategy.js');
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import test from 'node:test';
+import { Strategy as TripItStrategy } from '../lib/passport-tripit/strategy.js';
 
 test('TripItStrategy', async t => {
   await t.test('strategy should be named tripit', () => {
@@ -28,7 +28,7 @@ test('TripItStrategy', async t => {
 
     // mock
     strategy._oauth.get = (_url, _token, _tokenSecret, callback) => {
-      fs.readFile(path.join(__dirname, 'fixtures', 'response.json'), 'utf-8', callback);
+      fs.readFile(path.join(import.meta.dirname, 'fixtures', 'response.json'), 'utf-8', callback);
     };
 
     await t.test('when told to load user profile', async () => {
