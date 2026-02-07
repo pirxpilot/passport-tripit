@@ -12,10 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/pirxpilot/passport-tripit.git"
-  },
-  "bugs": {
-    "url": "http://github.com/pirxpilot/passport-tripit/issues"
+    "url": "git+https://github.com/pirxpilot/passport-tripit.git"
   },
   "author": {
     "name": "Jared Hanson",
@@ -28,18 +25,25 @@
       "url": "http://www.opensource.org/licenses/MIT"
     }
   ],
-  "main": "./lib/passport-tripit",
+  "type": "module",
+  "exports": "./lib/passport-tripit/strategy.js",
   "dependencies": {
     "passport-oauth1": "1.x.x"
   },
   "devDependencies": {
-    "vows": "~0.8.1"
+    "@biomejs/biome": "^2.3.14"
+  },
+  "resolutions": {
+    "oauth": "0.10.2"
   },
   "scripts": {
-    "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"
+    "test": "make check"
   },
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 18.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "lib"
+  ]
 }

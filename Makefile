@@ -1,24 +1,15 @@
-SOURCES = lib/**/*.js
+check: lint test
 
-# ==============================================================================
-# Node Tests
-# ==============================================================================
+lint:
+	./node_modules/.bin/biome ci
 
-VOWS = ./node_modules/.bin/vows
-TESTS ?= test/*-test.js
+format:
+	./node_modules/.bin/biome check --fix
 
 test:
-	@NODE_ENV=test NODE_PATH=lib $(VOWS) $(TESTS)
+	node --test $(TEST_OPTS)
 
-# ==============================================================================
-# Static Analysis
-# ==============================================================================
+test-cov: TEST_OPTS := --experimental-test-coverage
+test-cov: test
 
-JSHINT = jshint
-
-hint: lint
-lint:
-	$(JSHINT) $(SOURCES)
-
-
-.PHONY: test hint lint
+.PHONY: check format lint test test-cov
